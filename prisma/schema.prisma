@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  osuid           Int              @unique
+  username        String           @unique
+  pp              Float            @default(0)
+  global_rank     Int              @default(0)
+  country_rank    Int              @default(0)
+  country         String
+  approved        Int              @default(0)
+  teams           Team[]
+  seed            Int              @default(0)
+  seasonal        Int              @default(1)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  userGroups      UserGroup[]
+  beatmapComments BeatmapComment[]
+  beatmap         Beatmap?
+}
+
+model UserGroup {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique
+  users     User[]
+  group     UserGroupType
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum UserGroupType {
+  HOST
+  ADMIN
+  POOLER
+  STREAMER
+  TESTER
+  GFX
+  SHEETER
+  PLAYER
+  COMMENTATOR
+  MAPPER
+  REFEREE
+}
+
+model Team {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  banner_url String
+  members    User[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Setting {
+  id                      Int    @id @default(autoincrement())
+  tournament_name         String @default("AstarCup")
+  max_pp_for_registration Float  @default(0)
+  min_approved_playcount  Float  @default(0)
+  current_seasonal        Int    @default(1)
+}
+
+model Beatmap {
+  id             Int              @id @default(autoincrement())
+  beatmap_id     Int              @unique
+  beatmapset_id  Int              @unique
+  title          String           @unique
+  title_unicode  String           @unique
+  artist         String           @unique
+  artist_unicode String           @unique
+  creator        String           @unique
+  cover_url      String           @unique
+  version        String           @unique
+  ar             Float            @unique
+  od             Float            @unique
+  cs             Float            @unique
+  hp             Float            @unique
+  bpm            Float            @unique
+  length         Int              @unique
+  max_combo      Int              @unique
+  star_rating    Float            @unique
+  mod            Json
+  selectMod      BeatmapSelectMod @default(NM)
+  selectModSlot  Int              @default(1)
+  selectByosuId  Int              @unique
+  user           User             @relation(fields: [selectByosuId], references: [osuid])
+  approved       Boolean          @default(false)
+  needTest       Boolean          @default(false)
+  season         Int              @default(1)
+  category       BeatmapCategory
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  beatmapComment BeatmapComment?
+}
+
+enum BeatmapCategory {
+  qua
+  ro16
+  sf
+  f
+  gf
+  // todo: fix this
+}
+
+enum BeatmapSelectMod {
+  NM
+  HD
+  HR
+  DT
+  LZ
+  TB
+}
+
+model BeatmapComment {
+  id         Int      @id @default(autoincrement())
+  beatmap_id Int      @unique
+  beatmap    Beatmap  @relation(fields: [beatmap_id], references: [beatmap_id])
+  comment    String   @default("")
+  osuid      Int      @unique
+  user       User     @relation(fields: [osuid], references: [osuid])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model MultiplayerRoom {
+  room_id    Int                 @id @default(autoincrement())
+  type       MultiplayerRoomType @default(SOLO)
+  start_time DateTime
+  end_time   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MultiplayerRoomType {
+  SOLO
+  TEAM_VS
+}
