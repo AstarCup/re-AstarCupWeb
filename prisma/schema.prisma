@@ -98,6 +98,8 @@ model Beatmap {
   user           User             @relation(fields: [selectByosuId], references: [osuid])
   approved       Boolean          @default(false)
   needTest       Boolean          @default(false)
+  isCustom       Boolean          @default(false)
+  isOriginal     Boolean          @default(false)
   season         Int              @default(1)
   category       BeatmapCategory
   createdAt      DateTime         @default(now())
