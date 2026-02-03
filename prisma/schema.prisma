@@ -21,6 +21,7 @@ model TournamentConfig {
   min_pp_for_registration Float    @default(0)
   current_seasonal        Season   @default(S1)
   current_category        Category @default(QUA)
+  canRegister             Boolean  @default(false)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 }

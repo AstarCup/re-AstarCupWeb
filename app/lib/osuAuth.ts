@@ -64,7 +64,6 @@ export async function getOsuClientToken(): Promise<{
     token_type: string;
 }> {
     try {
-        console.log('Checking OSU_CLIENT_ID and OSU_CLIENT_SECRET...');
         if (!OSU_CLIENT_ID || !OSU_CLIENT_SECRET) {
             throw new Error('OSU_CLIENT_ID and OSU_CLIENT_SECRET must be configured');
         }
