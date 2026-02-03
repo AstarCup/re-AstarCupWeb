@@ -1,0 +1,23 @@
+model Team {
+    id               Int                     @id @default(autoincrement())
+    name             String
+    banner_url       String
+    teamType         TeamColor
+    members          User[]
+    teamState        TeamState               @default(ACTIVE)
+    createdAt        DateTime                @default(now())
+    updatedAt        DateTime                @updatedAt
+    multiplayerRooms MultiplayerTeamvsRoom[]
+}
+
+enum TeamColor {
+    blue_team
+    red_team
+}
+
+enum TeamState {
+    ACTIVE
+    UNAPPROVED
+    APPROVED
+    BANNED
+}

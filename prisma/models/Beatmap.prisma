@@ -1,0 +1,65 @@
+model Beatmap {
+    id             Int              @id @default(autoincrement())
+    beatmap_id     Int              @unique
+    beatmapset_id  Int              @unique
+    title          String
+    title_unicode  String
+    artist         String
+    artist_unicode String
+    creator        String
+    cover_url      String
+    version        String
+    ar             Float
+    od             Float
+    cs             Float
+    hp             Float
+    bpm            Float
+    length         Int
+    max_combo      Int
+    star_rating    Float
+    mod            Json             @default("{}")
+    selectMod      BeatmapSelectMod @default(NM)
+    selectModSlot  Int              @default(1)
+    selectByosuId  Int
+    user           User             @relation(fields: [selectByosuId], references: [osuid])
+    selectNote     String           @default("")
+    approved       Boolean          @default(false)
+    needTest       Boolean          @default(false)
+    isCustom       Boolean          @default(false)
+    isOriginal     Boolean          @default(false)
+    season         Int              @default(1)
+    category       BeatmapCategory  @default(QUA)
+    enabled        Boolean          @default(true)
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    beatmapComment BeatmapComment?
+}
+
+enum BeatmapCategory {
+    QUA
+    RO16
+    QF
+    SF
+    F
+    GF
+}
+
+enum BeatmapSelectMod {
+    NM
+    HD
+    HR
+    DT
+    LZ
+    TB
+}
+
+model BeatmapComment {
+    id         Int      @id @default(autoincrement())
+    beatmap_id Int      @unique
+    beatmap    Beatmap  @relation(fields: [beatmap_id], references: [beatmap_id])
+    comment    String   @default("")
+    osuid      Int      @unique
+    user       User     @relation(fields: [osuid], references: [osuid])
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}

@@ -1,3 +1,12 @@
 ## 更新数据库prisma
 
 `npx prisma migrate dev --name init`
+
+### arch笔记本mysql测试服务器
+
+``
+mysqld --basedir=/usr \
+  --datadir=/home/aecw/re-AstarCupWeb/database \
+  --socket=/home/aecw/re-AstarCupWeb/database/mysql.sock \
+  --pid-file=/home/aecw/re-AstarCupWeb/database/mysql.pid &
+``

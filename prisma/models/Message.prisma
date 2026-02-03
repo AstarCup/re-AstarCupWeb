@@ -1,0 +1,7 @@
+model Message {
+    id         Int    @id @default(autoincrement())
+    content    String
+    osuid      Int
+    user       User   @relation(fields: [osuid], references: [osuid])
+    receiverId Int
+}

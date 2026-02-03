@@ -1,0 +1,12 @@
+model MultiplayerTeamvsRoom {
+    room_id      Int                 @id @default(autoincrement())
+    type         MultiplayerRoomType @default(SOLO)
+    team_red_id  Int                 @unique
+    team_blue_id Int                 @unique
+    start_time   DateTime
+    end_time     DateTime
+    createdAt    DateTime            @default(now())
+    updatedAt    DateTime            @updatedAt
+    team         Team?               @relation(fields: [teamId], references: [id])
+    teamId       Int?
+}

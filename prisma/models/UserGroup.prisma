@@ -1,0 +1,21 @@
+model UserGroup {
+    id        Int           @id @default(autoincrement())
+    group     UserGroupType
+    users     User[]
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt
+}
+
+enum UserGroupType {
+    HOST
+    ADMIN
+    POOLER
+    STREAMER
+    TESTER
+    GFX
+    SHEETER
+    PLAYER
+    COMMENTATOR
+    MAPPER
+    REFEREE
+}

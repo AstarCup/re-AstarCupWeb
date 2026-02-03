@@ -1,0 +1,49 @@
+model User {
+    id              Int              @id @default(autoincrement())
+    userState       UserState        @default(ACTIVE)
+    osuid           Int              @unique
+    username        String           @unique
+    pp              Float            @default(0)
+    global_rank     Int              @default(0)
+    country_rank    Int              @default(0)
+    country         String
+    approved        Int              @default(0)
+    seed            Int              @default(0)
+    seasonal        Int              @default(1)
+    teams           Team[]
+    userGroups      UserGroup[]
+    beatmapComments BeatmapComment[]
+    messages        Message[]
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @updatedAt
+    beatmaps        Beatmap[]
+}
+
+enum UserState {
+    ACTIVE
+    REGISTERED
+    ABANDONED
+    BANNED
+}
+
+model UserGroup {
+    id        Int           @id @default(autoincrement())
+    group     UserGroupType
+    users     User[]
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt
+}
+
+enum UserGroupType {
+    HOST
+    ADMIN
+    POOLER
+    STREAMER
+    TESTER
+    GFX
+    SHEETER
+    PLAYER
+    COMMENTATOR
+    MAPPER
+    REFEREE
+}
