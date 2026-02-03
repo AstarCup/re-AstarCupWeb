@@ -1,13 +1,14 @@
 model Team {
-    id               Int                     @id @default(autoincrement())
-    name             String
-    banner_url       String
-    teamType         TeamColor
-    members          User[]
-    teamState        TeamState               @default(ACTIVE)
-    createdAt        DateTime                @default(now())
-    updatedAt        DateTime                @updatedAt
-    multiplayerRooms MultiplayerTeamvsRoom[]
+    id         Int                     @id @default(autoincrement())
+    name       String
+    banner_url String
+    teamColor  TeamColor
+    members    User[]
+    teamState  TeamState               @default(ACTIVE)
+    createdAt  DateTime                @default(now())
+    updatedAt  DateTime                @updatedAt
+    red_team   MultiplayerTeamvsRoom[] @relation("red_team")
+    blue_team  MultiplayerTeamvsRoom[] @relation("blue_team")
 }
 
 enum TeamColor {

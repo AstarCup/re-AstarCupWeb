@@ -15,9 +15,26 @@ datasource db {
 }
 
 model TournamentConfig {
-  id                      Int    @id @default(autoincrement())
-  tournament_name         String @default("AstarCup")
-  max_pp_for_registration Float  @default(0)
-  min_approved_playcount  Float  @default(0)
-  current_seasonal        Int    @default(1)
+  id                      Int      @id @default(autoincrement())
+  tournament_name         String   @default("AstarCup")
+  max_pp_for_registration Float    @default(0)
+  min_pp_for_registration Float    @default(0)
+  current_seasonal        Season   @default(S1)
+  current_category        Category @default(QUA)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+enum Season {
+  S1
+  S2
+}
+
+enum Category {
+  QUA
+  RO16
+  QF
+  SF
+  F
+  GF
 }

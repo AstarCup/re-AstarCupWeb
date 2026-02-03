@@ -1,0 +1,22 @@
+model MultiplayerRoom {
+    room_id                      Int                    @id @default(autoincrement())
+    type                         MultiplayerRoomType    @default(SOLO)
+    season                       Season                 @default(S1)
+    category                     Category               @default(QUA)
+    multiplayerSoloRoomRoom_id   Int?
+    multiplayerTeamvsRoomRoom_id Int?
+    MultiplayerSoloRoom          MultiplayerSoloRoom?   @relation(fields: [multiplayerSoloRoomRoom_id], references: [room_id])
+    MultiplayerTeamvsRoom        MultiplayerTeamvsRoom? @relation(fields: [multiplayerTeamvsRoomRoom_id], references: [room_id])
+    score_red                    Int                    @default(0)
+    score_blue                   Int                    @default(0)
+    message                      Message[]
+    start_time                   DateTime
+    end_time                     DateTime
+    createdAt                    DateTime               @default(now())
+    updatedAt                    DateTime               @updatedAt
+}
+
+enum MultiplayerRoomType {
+    SOLO
+    TEAM_VS
+}

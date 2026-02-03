@@ -1,6 +1,7 @@
 ## 更新数据库prisma
 
 `npx prisma migrate dev --name init`
+`npx prisma migrate dev`
 
 ### arch笔记本mysql测试服务器
 

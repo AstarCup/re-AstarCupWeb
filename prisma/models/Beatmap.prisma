@@ -17,7 +17,7 @@ model Beatmap {
     length         Int
     max_combo      Int
     star_rating    Float
-    mod            Json             @default("{}")
+    mod            Json             @default("[]")
     selectMod      BeatmapSelectMod @default(NM)
     selectModSlot  Int              @default(1)
     selectByosuId  Int
@@ -28,20 +28,11 @@ model Beatmap {
     isCustom       Boolean          @default(false)
     isOriginal     Boolean          @default(false)
     season         Int              @default(1)
-    category       BeatmapCategory  @default(QUA)
+    category       Category         @default(QUA)
     enabled        Boolean          @default(true)
     createdAt      DateTime         @default(now())
     updatedAt      DateTime         @updatedAt
     beatmapComment BeatmapComment?
-}
-
-enum BeatmapCategory {
-    QUA
-    RO16
-    QF
-    SF
-    F
-    GF
 }
 
 enum BeatmapSelectMod {

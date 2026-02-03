@@ -1,0 +1,8 @@
+model MultiplayerSoloRoom {
+    room_id          Int               @id @default(autoincrement())
+    player_red_id    Int               @unique
+    player_blue_id   Int               @unique
+    player_red       User              @relation("SoloRedPlayer", fields: [player_red_id], references: [osuid])
+    player_blue      User              @relation("SoloBluePlayer", fields: [player_blue_id], references: [osuid])
+    multiplayerRooms MultiplayerRoom[]
+}

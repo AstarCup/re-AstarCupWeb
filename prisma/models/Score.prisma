@@ -1,0 +1,17 @@
+model Score {
+    id          Int      @id @default(autoincrement())
+    user_id     Int
+    username    String
+    beatmap_id  Int
+    total_score Int      @default(0)
+    accuracy    Float    @default(0)
+    max_combo   Int      @default(0)
+    mods        Json     @default("[]")
+    rank        Int      @default(0)
+    pp          Float    @default(0)
+    passed      Boolean  @default(true)
+    statistics  Json     @default("[]")
+    ended_at    DateTime
+    saved_at    DateTime
+    updatedAt   DateTime @updatedAt
+}
