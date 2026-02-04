@@ -3,6 +3,9 @@
 `npx prisma migrate dev --name init`
 `npx prisma migrate dev`
 
+Generate Prisma Client
+`npx prisma generate`
+
 ### arch笔记本mysql测试服务器
 
 ``

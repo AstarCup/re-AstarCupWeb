@@ -11,7 +11,8 @@ generator client {
 
 datasource db {
   // provider = "postgres"
-  provider = "mysql"
+  // provider = "mysql"
+  provider = "postgresql"
 }
 
 model TournamentConfig {

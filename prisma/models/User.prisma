@@ -9,7 +9,7 @@ model User {
     pp              Float                 @default(0)
     global_rank     Int                   @default(0)
     country_rank    Int                   @default(0)
-    approved        Int                   @default(0)
+    approved        Boolean               @default(false)
     seed            Int                   @default(0)
     seasonal        Int                   @default(1)
     SoloRedPlayer   MultiplayerSoloRoom[] @relation("SoloRedPlayer")

@@ -58,6 +58,19 @@ export default function TournamentConfigCard({
         });
     };
 
+    const initConfig = async () => {
+        try {
+            const response = await fetch('/api/admin/init-database', {
+                method: 'GET',
+            });
+            const data = await response.json();
+            setConfig(data);
+            initializeForm(data);
+        } catch (error) {
+            console.error('初始化比赛配置失败:', error);
+        }
+    }
+
     // 加载配置
     const loadConfig = async () => {
         setLoading(true);
@@ -65,7 +78,7 @@ export default function TournamentConfigCard({
 
         try {
             // 这里需要调用 API 路由
-            const response = await fetch('/debug/api/tournament-config');
+            const response = await fetch('/api/config',{ method:'GET',});
             if (!response.ok) {
                 throw new Error(`加载失败: ${response.status}`);
             }
@@ -97,7 +110,7 @@ export default function TournamentConfigCard({
         setSuccess(null);
 
         try {
-            const response = await fetch('/debug/api/tournament-config', {
+            const response = await fetch('/api/admin/set-config', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -176,6 +189,13 @@ export default function TournamentConfigCard({
                         className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 disabled:opacity-50"
                     >
                         刷新
+                    </button>
+                    <button
+                        onClick={initConfig}
+                        disabled={loading}
+                        className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 disabled:opacity-50"
+                    >
+                        初始化
                     </button>
                     <button
                         onClick={resetToDefaults}

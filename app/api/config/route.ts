@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/app/lib/PrismaClient';
 
-// GET: 获取配置
+
 export async function GET() {
     try {
         const config = await prisma.tournamentConfig.findUnique({
             where: { id: 1 },
         });
-
         return NextResponse.json(config);
     } catch (error) {
         console.error('获取比赛配置失败:', error);
@@ -17,3 +16,4 @@ export async function GET() {
         );
     }
 }
+
