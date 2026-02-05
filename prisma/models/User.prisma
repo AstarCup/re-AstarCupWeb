@@ -11,7 +11,7 @@ model User {
     country_rank    Int                   @default(0)
     approved        Boolean               @default(false)
     seed            Int                   @default(0)
-    seasonal        Int                   @default(1)
+    seasonal        Season                @default(S1)
     SoloRedPlayer   MultiplayerSoloRoom[] @relation("SoloRedPlayer")
     SoloBluePlayer  MultiplayerSoloRoom[] @relation("SoloBluePlayer")
     teams           Team[]

@@ -1,6 +1,7 @@
+// 这些环境变量只在服务器端可用
 const OSU_CLIENT_ID = process.env.OSU_CLIENT_ID || '';
 const OSU_CLIENT_SECRET = process.env.OSU_CLIENT_SECRET || '';
-const OSU_REDIRECT_URI = process.env.OSU_REDIRECT_URI || 'http://localhost:3000/auth/osu/callback';
+const OSU_REDIRECT_URI = process.env.OSU_REDIRECT_URI || 'http://localhost:3000/api/auth/callback/osu';
 
 export function getOsuAuthUrl() {
     if (!OSU_CLIENT_ID || !OSU_CLIENT_SECRET) {

@@ -14,3 +14,12 @@ mysqld --basedir=/usr \
   --socket=/home/aecw/re-AstarCupWeb/database/mysql.sock \
   --pid-file=/home/aecw/re-AstarCupWeb/database/mysql.pid &
 ``
+
+# env
+``
+OSU_CLIENT_ID =
+OSU_CLIENT_SECRET =
+OSU_REDIRECT_URI =
+DATABASE_URL=""
+DATABASE_CLIENT_URL=""
+``
