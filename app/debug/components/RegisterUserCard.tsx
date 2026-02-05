@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Season } from '@/app/generated/prisma/enums';
 
-interface UserInfo {
+interface userInfo {
     id: number;
     osuid: number;
     username: string;
@@ -19,12 +19,16 @@ interface UserInfo {
     approved: boolean;
     seed: number;
 }
+interface RegisterUserCardProps {
+    userInfo?: userInfo;
+    onRefresh?: () => void;
+}
 
-export default function RegisterUserCard() {
+export default function RegisterUserCard({ userInfo: initialUserInfo, onRefresh }: RegisterUserCardProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
-    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    const [userInfo, setUserInfo] = useState<userInfo | null>(null);
     const [searchType, setSearchType] = useState<'osuid' | 'username'>('osuid');
     const [searchValue, setSearchValue] = useState('');
     const [updateData, setUpdateData] = useState({
@@ -37,78 +41,6 @@ export default function RegisterUserCard() {
         country_rank: 0,
     });
 
-    // 检查URL参数，处理OAuth回调结果，并检查当前登录状态
-    useEffect(() => {
-        const checkCurrentUser = async () => {
-            console.log('Checking current user session...');
-            try {
-                const response = await fetch('/api/user/me', {
-                    credentials: 'include', // 确保发送 cookie
-                });
-                
-                console.log('API response status:', response.status);
-                
-                if (response.ok) {
-                    const user = await response.json();
-                    console.log('User found:', user.username);
-                    
-                    setUserInfo({
-                        id: user.id,
-                        osuid: user.osuid,
-                        username: user.username,
-                        avatar_url: user.avatar_url,
-                        cover_url: user.cover_url,
-                        country_code: user.country_code,
-                        pp: user.pp,
-                        global_rank: user.global_rank,
-                        country_rank: user.country_rank,
-                        seasonal: user.seasonal,
-                        userState: user.userState,
-                        approved: user.approved === 1,
-                        seed: user.seed,
-                    });
-
-                    setUpdateData({
-                        username: user.username,
-                        avatar_url: user.avatar_url || '',
-                        cover_url: user.cover_url || '',
-                        country_code: user.country_code,
-                        pp: user.pp,
-                        global_rank: user.global_rank,
-                        country_rank: user.country_rank,
-                    });
-                } else {
-                    console.log('User not authenticated or API error:', response.status);
-                }
-            } catch (err) {
-                // 忽略错误，用户可能未登录
-                console.log('Error checking user session:', err);
-            }
-
-            // 检查URL参数，处理OAuth回调结果
-            const params = new URLSearchParams(window.location.search);
-            const successParam = params.get('success');
-            const usernameParam = params.get('username');
-            const osuidParam = params.get('osuid');
-            const errorParam = params.get('error');
-
-            if (successParam === 'true' && usernameParam && osuidParam) {
-                setSuccess(`用户 ${usernameParam} (osuid: ${osuidParam}) 注册/登录成功！`);
-                // 清空URL参数
-                const newUrl = window.location.pathname;
-                window.history.replaceState({}, '', newUrl);
-            }
-
-            if (errorParam) {
-                setError(decodeURIComponent(errorParam));
-                // 清空URL参数
-                const newUrl = window.location.pathname;
-                window.history.replaceState({}, '', newUrl);
-            }
-        };
-
-        checkCurrentUser();
-    }, []);
 
     const handleOsuLogin = () => {
         window.location.href = '/api/auth/getAuthUrl';
@@ -358,7 +290,6 @@ export default function RegisterUserCard() {
                             退出登录
                         </button>
                     </div>
-                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                             <p><strong>ID:</strong> {userInfo.id}</p>
